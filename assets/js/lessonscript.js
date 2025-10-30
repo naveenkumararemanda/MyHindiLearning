@@ -165,12 +165,26 @@ function startSpeech(text, lang = 'hi-IN') {
     u.rate = 0.8;
     const v = (speechSynthesis.getVoices() || []).find(v => (v.lang || '').startsWith('hi')) || null;
     if (v) u.voice = v;
-
-    u.onend = () => { currentUtterance = null; /* update UI if needed */ };
+    showSpeechControls();
+    u.onend = () => { currentUtterance = null; hideSpeechControls(); };
     u.onerror = (e) => { console.error('speech error', e); currentUtterance = null; };
 
     currentUtterance = u;
     window.speechSynthesis.speak(u);
+}
+
+function hideSpeechControls() {
+    const controls = document.getElementsByClassName('speech-controls');
+    for (let i = 0; i < controls.length; i++) {
+        controls[i].style.display = 'none';
+    }
+}
+
+function showSpeechControls() {
+    const controls = document.getElementsByClassName('speech-controls');
+    for (let i = 0; i < controls.length; i++) {
+        controls[i].style.display = 'inline-block';
+    }
 }
 
 function pauseSpeech() {
@@ -194,6 +208,8 @@ function stopSpeech() {
         window.speechSynthesis.cancel();
     }
     currentUtterance = null;
+    currentText = '';
+    hideSpeechControls(); 
 }
 
 // keep old speak() name if other code calls it
