@@ -1,3 +1,12 @@
+google.charts.load("elements", "1", { packages: "transliteration" });
+    let transliterationControl;
+    function onLoad() {
+        const opts = { sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH, destinationLanguage: [google.elements.transliteration.LanguageCode.HINDI], shortcutKey: 'ctrl+g', transliterationEnabled: true };
+        transliterationControl = new google.elements.transliteration.TransliterationControl(opts);
+        showQuestion();
+    }
+    google.charts.setOnLoadCallback(onLoad);
+
 readJSON();
 
 var coll = document.getElementsByClassName("collapsible");
@@ -12,6 +21,18 @@ for (i = 0; i < coll.length; i++) {
     } else {
       content.style.display = "block";
     }
+  });
+}
+
+var speakButtons = document.getElementsByClassName("speak-btn");
+var i;
+
+for (i = 0; i < speakButtons.length; i++) {
+  speakButtons[i].addEventListener("click", function() {
+    const textToSpeak = '';
+    textToSpeak = speakButtons[i].dataset.userId;
+    speak(textToSpeak);
+    console.log('speak button clicked:', textToSpeak);
   });
 }
 
@@ -45,6 +66,7 @@ function readJSON(){
         const tag_btn = document.createElement('button');
         tag_btn.textContent = "Listen";
         tag_btn.className = "speak-btn";
+
         // Populate Q&A
         if(lesson.questions){
             const tag_ol = document.createElement('ol');
@@ -53,8 +75,10 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
                 const tag_h3 = document.createElement('h3');
-                
-                tag_h4.innerHTML = 'Q: ' + question.q + tag_btn.outerHTML;
+
+                tag_btn.dataset.userId = question.q;
+                tag_h4.innerHTML = 'Q: ' + question.q + tag_btn.outerHTML;   
+                tag_btn.dataset.userId = question.a;           
                 tag_h3.innerHTML = 'A: ' + question.a + tag_btn.outerHTML;
                 
                 tag_li.appendChild(tag_h4);
@@ -100,3 +124,20 @@ function readJSON(){
         console.error('Error fetching JSON:', error);
     });
 }  
+
+function speak(t, l = 'hi-IN') {
+        if (!('speechSynthesis' in window))
+            return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(t);
+        u.lang = l; u.rate = 0.8;
+        const v = (speechSynthesis.getVoices() || []).find(v => (v.lang || '').startsWith('hi')) || null;
+        if (v) u.voice = v;
+        console.log('speaking:', t, l, u);
+        window.speechSynthesis.speak(u);
+    }
+
+ window.speechSynthesis.onvoiceschanged = () => {
+        const voices = speechSynthesis.getVoices();
+        // console.log(voices);
+    };
