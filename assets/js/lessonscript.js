@@ -163,8 +163,8 @@ function startSpeech(text, lang = 'hi-IN') {
     currentText = text || '';
     currentLang = lang || 'hi-IN';
     if (!currentText) return;
-
-    const u = new SpeechSynthesisUtterance(currentText);
+    const sanitizedText = sanitizeSpeechText(currentText);
+    const u = new SpeechSynthesisUtterance(sanitizedText);
     u.lang = currentLang;
     u.rate = 0.8;
     const v = (speechSynthesis.getVoices() || []).find(v => (v.lang || '').startsWith('hi')) || null;
@@ -232,13 +232,11 @@ stop.addEventListener('click', () => stopSpeech());
 function sanitizeSpeechText(html) {
     const div = document.createElement('div');
     div.innerHTML = html;
-    
     return (div.textContent || div.innerText || '').replace(/\s+/g, ' ').trim();
 }
 
 // small change: ensure makeListenBtn uses startSpeech (replace previous call to speak)
 const makeListenBtn = (text, lang = 'hi-IN') => {
-    console.log('sanitizeSpeechText:', clearText);
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'speak-btn';
