@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    scroll-padding: 102px;
 }
 
 /* General styles */
@@ -93,7 +94,7 @@ main {
     /* Enlarge main element to push footer down*/
     flex: 1 0 auto;
     /* Add margin at the top to prevent content from being covered by the header */
-    margin-top: 47px;
+    margin-top: 79px;
     /* Enable flex properties for child elements */
     display: flex;
     flex-direction: column;
@@ -208,7 +209,7 @@ display: none; /* default */
 
 
 
-
+/* 
 
 
 
@@ -346,4 +347,4 @@ display: none; /* default */
     #benefits-physical > div {
         align-self: flex-end;
     }
-}
+} */
