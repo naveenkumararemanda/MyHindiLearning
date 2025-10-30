@@ -42,6 +42,12 @@ header a {
     text-decoration: none;
     color: inherit;
 }
+#logo {
+    font-size: 220%;
+    line-height: 47px;
+    margin: 0 0.5rem;
+    color: #949e00;
+}
 
 #menu {
     font-size: 110%;
@@ -91,6 +97,7 @@ main {
     /* Enable flex properties for child elements */
     display: flex;
     flex-direction: column;
+    padding: 21px;
 }
 
 .lessons-grid {
@@ -110,7 +117,21 @@ main {
 }
 
 .lesson-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.025);
+    background: #f4faa2;
+}
+.speak-btn {
+    background: #f3ab12;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    margin:12px 0 0 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+li{
+    margin: 12px;
 }
 
 /* Footer */
@@ -129,7 +150,7 @@ main {
 }
 
 .container {
-    max-width: 75%;
+  width: 100%;
     margin: 30px auto;
     padding: 20px;
 }
@@ -146,6 +167,7 @@ main {
   border-bottom: 1px solid #ddd;
   cursor: pointer;
   font-size: 15px;
+  color: white  ;
 }
 
 .active, .collapsible:hover {
@@ -157,7 +179,6 @@ display: none; /* default */
   width: 100%;
   box-sizing: border-box;
   padding: 8px 12px;
-  margin: 0;
   background: #f1f1f1;
   border-left: none;
 }

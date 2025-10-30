@@ -1,0 +1,92 @@
+{
+    "lesson1": {
+        "title": "मेरा नाम राहुल है।",
+        "questions": [
+            {
+                "q": "What is 'hello'?",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ],
+        "fillblanks": [
+            {
+                "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ],
+        "meanings": [
+            {
+                "q": "What is 'hello'?",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ]
+    },
+    "lesson2": {
+        "title": "मेरा नाम राहुल है।",
+        "questions": [
+            {
+                "q": "What is 'hello'?",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ],
+        "fillblanks": [
+            {
+                "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ],
+        "meanings": [
+            {
+                "q": "What is 'hello'?",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Type: namaste",
+                "a": "नमस्ते"
+            },
+            {
+                "q": "Say: My name is Rahul.",
+                "a": "मेरा नाम राहुल है।"
+            }
+        ]
+    }
+}
