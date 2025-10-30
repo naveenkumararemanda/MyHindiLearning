@@ -93,6 +93,26 @@ main {
     flex-direction: column;
 }
 
+.lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.lesson-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.lesson-card:hover {
+    transform: scale(1.05);
+}
+
 /* Footer */
 #social-networks {
     text-align: center;
