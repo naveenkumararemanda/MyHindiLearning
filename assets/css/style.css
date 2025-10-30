@@ -1,0 +1,49 @@
+* {
+box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    background: #f0f8ff;
+    margin: 0;
+}
+
+.container {
+    max-width: 75%;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.collapsible {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 7px 0;
+  text-align: left;
+  background: #777;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible-content {
+display: none; /* default */
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  margin: 0;
+  background: #f1f1f1;
+  border-left: none;
+}
+
+.underline {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #d35400; /* match accent color */
+}
