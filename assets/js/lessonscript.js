@@ -24,17 +24,17 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-var speakButtons = document.getElementsByClassName("speak-btn");
-var i;
+// var speakButtons = document.getElementsByClassName("speak-btn");
+// var i;
 
-for (i = 0; i < speakButtons.length; i++) {
-  speakButtons[i].addEventListener("click", function() {
-    const textToSpeak = '';
-    textToSpeak = speakButtons[i].dataset.userId;
-    speak(textToSpeak);
-    console.log('speak button clicked:', textToSpeak);
-  });
-}
+// for (i = 0; i < speakButtons.length; i++) {
+//   speakButtons[i].addEventListener("click", function() {
+//     const textToSpeak = '';
+//     textToSpeak = speakButtons[i].dataset.userId;
+//     // speak(textToSpeak);
+//     console.log('speak button clicked:', textToSpeak);
+//   });
+// }
 
 function getQueryParam(name){
     const params = new URLSearchParams(window.location.search);
@@ -66,6 +66,21 @@ function readJSON(){
         const tag_btn = document.createElement('button');
         tag_btn.textContent = "Listen";
         tag_btn.className = "speak-btn";
+        tag_btn.type = "button";
+
+
+        // helper to create a listen button
+        const makeListenBtn = (text, lang = 'hi-IN') => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'speak-btn';
+            btn.textContent = 'Listen';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                speak(text, lang);
+            });
+            return btn;
+        };
 
         // Populate Q&A
         if(lesson.questions){
@@ -77,10 +92,13 @@ function readJSON(){
                 const tag_h3 = document.createElement('h3');
 
                 tag_btn.dataset.userId = question.q;
-                tag_h4.innerHTML = 'Q: ' + question.q + tag_btn.outerHTML;   
-                tag_btn.dataset.userId = question.a;           
-                tag_h3.innerHTML = 'A: ' + question.a + tag_btn.outerHTML;
-                
+                const qBtn = makeListenBtn(question.q || '');
+                tag_h4.innerHTML = 'Q: ' + question.q;// + tag_btn.outerHTML;   
+                tag_h4.appendChild(qBtn);
+                tag_btn.dataset.userId = question.a;      
+                const aBtn = makeListenBtn(question.a || '');     
+                tag_h3.innerHTML = 'A: ' + question.a;// + tag_btn.outerHTML;
+                tag_h3.appendChild(aBtn);
                 tag_li.appendChild(tag_h4);
                 tag_li.appendChild(tag_h3);
 
@@ -96,7 +114,9 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
 
-                tag_h4.innerHTML = '' + question.q + tag_btn.outerHTML;
+                const qBtn = makeListenBtn(question.q || '');
+                tag_h4.innerHTML = '' + question.q;// + tag_btn.outerHTML;
+                tag_h4.appendChild(qBtn);
                 tag_li.appendChild(tag_h4);
                 tag_ol.appendChild(tag_li);
             }
@@ -110,7 +130,9 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
                 
-                tag_h4.innerHTML = '' + question.q + tag_btn.outerHTML + ' - '+ question.a + tag_btn.outerHTML;
+                const qBtn = makeListenBtn(question.q + ' - '+ question.a || '');
+                tag_h4.innerHTML = '' + question.q + ' - '+ question.a;
+                tag_h4.appendChild(qBtn);
                 
                 tag_li.appendChild(tag_h4);
 
@@ -133,7 +155,7 @@ function speak(t, l = 'hi-IN') {
         u.lang = l; u.rate = 0.8;
         const v = (speechSynthesis.getVoices() || []).find(v => (v.lang || '').startsWith('hi')) || null;
         if (v) u.voice = v;
-        console.log('speaking:', t, l, u);
+        // console.log('speaking:', t, l, u);
         window.speechSynthesis.speak(u);
     }
 
