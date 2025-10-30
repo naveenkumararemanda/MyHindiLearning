@@ -47,19 +47,19 @@ function readJSON(){
     const div_fill_blanks = document.getElementById('fill-blanks');
     const div_meanings = document.getElementById('meanings');
     const lessontitle = document.getElementById('lesson-title');
-    
+
     const basePath = (function(){
         const p = window.location.pathname;
         // keep the trailing slash for the current directory
         return p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
     })();
     const jsonUrl = new URL('assets/data/lessons.json', window.location.origin + basePath).href;
-    console.log('Loading lessons JSON from', jsonUrl);
+    // console.log('Loading lessons JSON from', jsonUrl);
     fetch(jsonUrl).then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
     }).then(data => {
-        console.log('fetched json:', data);
+        // console.log('fetched json:', data);
         const lessonNum = getQueryParam('lesson');
         const lesson = data[`lesson${lessonNum}`];
         if(!lesson){
@@ -97,11 +97,9 @@ function readJSON(){
                 const tag_h4 = document.createElement('h4');
                 const tag_h3 = document.createElement('h3');
 
-                tag_btn.dataset.userId = question.q;
                 const qBtn = makeListenBtn(question.q || '');
                 tag_h4.innerHTML = 'Q: ' + question.q;// + tag_btn.outerHTML;   
                 tag_h4.appendChild(qBtn);
-                tag_btn.dataset.userId = question.a;      
                 const aBtn = makeListenBtn(question.a || '');     
                 tag_h3.innerHTML = 'A: ' + question.a;// + tag_btn.outerHTML;
                 tag_h3.appendChild(aBtn);
@@ -136,7 +134,7 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
                 
-                const qBtn = makeListenBtn(question.q + ' - '+ question.a || '');
+                const qBtn = makeListenBtn(question.q + '  '+ question.a || '');
                 tag_h4.innerHTML = '' + question.q + ' - '+ question.a;
                 tag_h4.appendChild(qBtn);
                 
@@ -231,15 +229,23 @@ pause.addEventListener('click', () => pauseSpeech());
 const stop = document.getElementById('speech-stop');
 stop.addEventListener('click', () => stopSpeech());
 
+function sanitizeSpeechText(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    
+    return (div.textContent || div.innerText || '').replace(/\s+/g, ' ').trim();
+}
+
 // small change: ensure makeListenBtn uses startSpeech (replace previous call to speak)
 const makeListenBtn = (text, lang = 'hi-IN') => {
+    console.log('sanitizeSpeechText:', clearText);
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'speak-btn';
     btn.textContent = 'Listen';
     btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        startSpeech(text, lang);
+         startSpeech(text, lang);
     });
     return btn;
 };
