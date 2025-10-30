@@ -49,7 +49,7 @@ function readJSON(){
     const lessontitle = document.getElementById('lesson-title');
 
 
-    fetch("/assets/data/lessons.json").then(response => {
+    fetch("../assets/data/lessons.json").then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
     }).then(data => {
