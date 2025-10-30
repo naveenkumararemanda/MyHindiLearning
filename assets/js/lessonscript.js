@@ -47,9 +47,15 @@ function readJSON(){
     const div_fill_blanks = document.getElementById('fill-blanks');
     const div_meanings = document.getElementById('meanings');
     const lessontitle = document.getElementById('lesson-title');
-
-
-    fetch("../assets/data/lessons.json").then(response => {
+    
+    const basePath = (function(){
+        const p = window.location.pathname;
+        // keep the trailing slash for the current directory
+        return p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
+    })();
+    const jsonUrl = new URL('assets/data/lessons.json', window.location.origin + basePath).href;
+    console.log('Loading lessons JSON from', jsonUrl);
+    fetch(jsonUrl).then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
     }).then(data => {
