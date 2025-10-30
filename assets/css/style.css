@@ -85,6 +85,10 @@ nav {
     display: none;
 }
 
+.speech-controls{
+    display:none;
+}
+
 .nav-toggle-label {
     font-size: 2rem;
 }
