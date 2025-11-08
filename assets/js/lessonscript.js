@@ -134,7 +134,7 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
                 
-                const qBtn = makeListenBtn(question.q + '  '+ question.a || '');
+                const qBtn = makeListenBtn(question.q + ' , , '+ question.a || '');
                 tag_h4.innerHTML = '' + question.q + ' - '+ question.a;
                 tag_h4.appendChild(qBtn);
                 
