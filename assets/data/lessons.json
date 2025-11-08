@@ -23,7 +23,7 @@
             {
                 "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
                 "a": "नमस्ते"
-            },
+            }
         ],
         "meanings": [
             {
@@ -73,7 +73,7 @@
             {
                 "q": "समारोह ",
                 "a": "उत्सव, मेला "
-            },
+            }
         ]
     },
     "lesson9": {
@@ -104,7 +104,7 @@
             {
                 "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
                 "a": "नमस्ते"
-            },
+            }
         ],
         "meanings": [
             {
@@ -150,7 +150,7 @@
             {
                 "q": "शृंगार ",
                 "a": "सजावट , आभूषण "
-            },
+            }
         ]
     }
 }
