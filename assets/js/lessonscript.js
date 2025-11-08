@@ -97,10 +97,10 @@ function readJSON(){
                 const tag_h4 = document.createElement('h4');
                 const tag_h3 = document.createElement('h3');
 
-                const qBtn = makeListenBtn(question.q || '');
+                const qBtn = makeListenBtn(question.q + ' , , '|| '');
                 tag_h4.innerHTML = 'Q: ' + question.q;// + tag_btn.outerHTML;   
                 tag_h4.appendChild(qBtn);
-                const aBtn = makeListenBtn(question.a || '');     
+                const aBtn = makeListenBtn(question.a + ' , , '|| '');     
                 tag_h3.innerHTML = 'A: ' + question.a;// + tag_btn.outerHTML;
                 tag_h3.appendChild(aBtn);
                 tag_li.appendChild(tag_h4);
@@ -118,7 +118,7 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
 
-                const qBtn = makeListenBtn(question.q || '');
+                const qBtn = makeListenBtn(question.q + ' , , '|| '');
                 tag_h4.innerHTML = '' + question.q;// + tag_btn.outerHTML;
                 tag_h4.appendChild(qBtn);
                 tag_li.appendChild(tag_h4);
@@ -134,7 +134,7 @@ function readJSON(){
                 const tag_li = document.createElement('li');
                 const tag_h4 = document.createElement('h4');
                 
-                const qBtn = makeListenBtn(question.q + ' , , '+ question.a || '');
+                const qBtn = makeListenBtn(question.q + ' , , '+ question.a + ' , , '|| '');
                 tag_h4.innerHTML = '' + question.q + ' - '+ question.a;
                 tag_h4.appendChild(qBtn);
                 
