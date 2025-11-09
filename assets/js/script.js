@@ -20,13 +20,15 @@ function readJSON(){
         return p.endsWith('/') ? p : p.replace(/\/[^\/]*$/, '/');
     })();
     const jsonUrl = new URL('assets/data/lessons.json', window.location.origin + basePath).href;
-    console.log('Loading lessons JSON from', jsonUrl);
-    fetch(jsonUrl).then(response => {
+    const sampleUrl = new URL('assets/data/sample.json', window.location.origin + basePath).href;
+    
+    fetch(sampleUrl).then(response => {
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         return response.json();
     }).then(data => {
         console.log('fetched json:', data);
         // clear existing children (optional)
+
         lessongrid.innerHTML = '';
         for (let key in data) {
             if(key.startsWith("lesson")){
