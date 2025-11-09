@@ -25,16 +25,6 @@
                 ]
             },
             {
-                "topic": "fill in the blanks",
-                "topic_type": "fillblanks",
-                "sub_topics": [
-                    {
-                        "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
-                        "a": "नमस्ते"
-                    }
-                ]
-            },
-            {
                 "topic": "शब्द -अर्ध",
                 "topic_type": "meanings",
                 "sub_topics": [
@@ -234,16 +224,6 @@
                     {
                         "q": "इन कविता का संदेश को अपने शब्दों में लिखो ",
                         "a": "यह कविता हमे संदेश देती है कि भारत में रहनेवाला हर मनुष्य चाहे वह किसी भी धर्म जाति या रंग-रूप का हो, एक दूसरे से मित्रता के सूत्र में बंधा है । इससे ही भारत की शोभा है ।"
-                    }
-                ]
-            },
-            {
-                "topic": "fill in the blanks",
-                "topic_type": "fillblanks",
-                "sub_topics": [
-                    {
-                        "q": "combined example: <strong class=\"underline\">important and underlined</strong>",
-                        "a": "नमस्ते"
                     }
                 ]
             },
