@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hindi Textbook - Fully Editable Study App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root {
+    --primary: #3498db;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+  }
+  body { 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+    margin:0; min-height:100vh; color:#333; 
+  }
+  .container { 
+    max-width: 1100px; margin: 20px auto; background: white; 
+    border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow: hidden; 
+  }
+  .header { background: var(--primary); color: white; padding: 25px; text-align: center; font-size: 28px; }
+  .nav { display: flex; background: var(--dark); flex-wrap: wrap; }
+  .nav button { flex: 1; min-width: 120px; padding: 15px; background: none; border: none; color: white; font-size: 16px; cursor: pointer; }
+  .nav button.active, .nav button:hover { background: rgba(255,255,255,0.2); }
+  .section { padding: 25px; display: none; }
+  .section.active { display: block; }
+  .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .lesson-card {
+    background: white; border: 2px solid #ddd; border-radius: 12px; padding: 20px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: all 0.3s;
+  }
+  .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-color: var(--primary); }
+  .lesson-card h3 { margin: 0 0 10px; color: var(--primary); }
+  .btn { padding: 8px 16px; margin: 5px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-success { background: var(--success); color: white; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-warning { background: var(--warning); color: white; }
+  .btn-small { padding: 5px 10px; font-size: 12px; }
+  input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; }
+  .form-group { margin: 15px 0; }
+  .topic { background: #f8f9fa; padding: 18px; margin: 20px 0; border-radius: 10px; border-left: 6px solid var(--primary); }
+  .qa-pair { 
+    background: white; padding: 14px; margin: 12px 0; border-radius: 8px; 
+    border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .back-btn { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">Hindi Textbook - Fully Editable Study App</div>
+  
+  <div class="nav">
+    <button onclick="showSection('home')" class="active">All Lessons</button>
+    <button onclick="showSection('add-lesson')">Add New Lesson</button>
+    <button onclick="showSection('manage')">Data Management</button>
+    <button onclick="exportData()" class="btn-warning">Export JSON</button>
+  </div>
+
+  <!-- Home: All Lessons -->
+  <div id="home" class="section active">
+    <div class="lesson-grid" id="lessonGrid"></div>
+  </div>
+
+  <!-- View Single Lesson -->
+  <div id="view-lesson" class="section">
+    <button class="btn btn-primary back-btn" onclick="showSection('home')">< Back to Lessons</button>
+    <h2 id="lessonTitle" style="margin:20px 0; color:var(--primary);"></h2>
+    <div id="lessonContent"></div>
+    <button class="btn btn-success" onclick="addNewTopic(currentLessonKey)">+ Add New Topic</button>
+  </div>
+
+  <!-- Add New Lesson -->
+  <div id="add-lesson" class="section">
+    <h2>Add New Lesson</h2>
+    <div class="form-group">
+      <input type="text" id="newKey" placeholder="Key (e.g., lesson10)" required>
+      <input type="text" id="newTitle" placeholder="Lesson Title (in Hindi)" required>
+      <button class="btn btn-success" onclick="createLesson()">Create Lesson</button>
+    </div>
+  </div>
+
+  <!-- Data Management -->
+  <div id="manage" class="section">
+    <h2>Data Management</h2>
+    <p><strong>Total Lessons:</strong> <span id="totalCount">0</span></p>
+    <button class="btn btn-danger" onclick="if(confirm('Delete ALL data permanently?')) { localStorage.clear(); location.reload(); }">
+      Delete All Data
+    </button>
+    <button class="btn btn-warning" onclick="document.getElementById('importFile').click()">
+      Import JSON Backup
+    </button>
+    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+    <p style="margin-top:20px; color:#666; font-size:14px;">
+      Your data is saved automatically in this browser.<br>
+      Use Export/Import to backup or transfer to another device.
+    </p>
+  </div>
+</div>
+
+<script>
+// =============== DEFAULT DATA (Paste your full JSON below) ===============
+const defaultData = {
+  "lesson8": {
+    "title": "सूरजकुंड मेला",
+    "topics": [
+      {
+        "topic": "लिखित",
+        "topic_type": "questions",
+        "sub_topics": [
+          { "q": "अंकन के पत्र का मुख्य उद्देश्य क्या था ?", "a": "अंकन के पत्र का मुख्य उद्देश्य हस्तशिल्प मेला का वर्ण करना। इन वस्तुओं से हम अपनी सभ्यता और संस्कृति की जानकारी प्राप्त होती है!" },
+          { "q": "उद्योग मेलों से हंमे क्या जानकारी मिलती है?", "a": "उद्योग मेलों दूरा हमे विभिन्न प्रदेशों की कला और संस्कृति की जानकारी प्राप्त होती है !" },
+          { "q": "उद्योग मेलों में क्या दर्शाया जाता है?", "a": "उद्योग मेल disparition में हात
