@@ -1,292 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hindi Textbook - Fully Editable Study App</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  :root {
-    --primary: #3498db;
-    --success: #2ecc71;
-    --danger: #e74c3c;
-    --warning: #f39c12;
-    --dark: #2c3e50;
-    --light: #ecf0f1;
-  }
-  body { 
-    font-family: 'Segoe UI', Arial, sans-serif; 
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-    margin:0; min-height:100vh; color:#333; 
-  }
-  .container { 
-    max-width: 1100px; margin: 20px auto; background: white; 
-    border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow: hidden; 
-  }
-  .header { background: var(--primary); color: white; padding: 25px; text-align: center; font-size: 28px; }
-  .nav { display: flex; background: var(--dark); flex-wrap: wrap; }
-  .nav button { flex: 1; min-width: 120px; padding: 15px; background: none; border: none; color: white; font-size: 16px; cursor: pointer; }
-  .nav button.active, .nav button:hover { background: rgba(255,255,255,0.2); }
-  .section { padding: 25px; display: none; }
-  .section.active { display: block; }
-  .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-  .lesson-card {
-    background: white; border: 2px solid #ddd; border-radius: 12px; padding: 20px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: all 0.3s;
-  }
-  .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-color: var(--primary); }
-  .lesson-card h3 { margin: 0 0 10px; color: var(--primary); }
-  .btn { padding: 8px 16px; margin: 5px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
-  .btn-primary { background: var(--primary); color: white; }
-  .btn-success { background: var(--success); color: white; }
-  .btn-danger { background: var(--danger); color: white; }
-  .btn-warning { background: var(--warning); color: white; }
-  .btn-small { padding: 5px 10px; font-size: 12px; }
-  input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; }
-  .form-group { margin: 15px 0; }
-  .topic { background: #f8f9fa; padding: 18px; margin: 20px 0; border-radius: 10px; border-left: 6px solid var(--primary); }
-  .qa-pair { 
-    background: white; padding: 14px; margin: 12px 0; border-radius: 8px; 
-    border: 1px solid #eee; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  }
-  .back-btn { font-size: 18px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hindi Textbook - Tree View Editor</title>
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-  <div class="header">Hindi Textbook - Fully Editable Study App</div>
-  
-  <div class="nav">
-    <button onclick="showSection('home')" class="active">All Lessons</button>
-    <button onclick="showSection('add-lesson')">Add New Lesson</button>
-    <button onclick="showSection('manage')">Data Management</button>
-    <button onclick="exportData()" class="btn-warning">Export JSON</button>
-  </div>
-
-  <!-- Home: All Lessons -->
-  <div id="home" class="section active">
-    <div class="lesson-grid" id="lessonGrid"></div>
-  </div>
-
-  <!-- View Single Lesson -->
-  <div id="view-lesson" class="section">
-    <button class="btn btn-primary back-btn" onclick="showSection('home')">< Back to Lessons</button>
-    <h2 id="lessonTitle" style="margin:20px 0; color:var(--primary);"></h2>
-    <div id="lessonContent"></div>
-    <button class="btn btn-success" onclick="addNewTopic(currentLessonKey)">+ Add New Topic</button>
-  </div>
-
-  <!-- Add New Lesson -->
-  <div id="add-lesson" class="section">
-    <h2>Add New Lesson</h2>
-    <div class="form-group">
-      <input type="text" id="newKey" placeholder="Key (e.g., lesson10)" required>
-      <input type="text" id="newTitle" placeholder="Lesson Title (in Hindi)" required>
-      <button class="btn btn-success" onclick="createLesson()">Create Lesson</button>
+<div class="app">
+  <!-- Left: Tree View -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Lessons Tree</h2>
+      <button class="btn small success" onclick="App.addLesson()">+ Lesson</button>
     </div>
-  </div>
+    <div id="tree"></div>
+  </aside>
 
-  <!-- Data Management -->
-  <div id="manage" class="section">
-    <h2>Data Management</h2>
-    <p><strong>Total Lessons:</strong> <span id="totalCount">0</span></p>
-    <button class="btn btn-danger" onclick="if(confirm('Delete ALL data permanently?')) { localStorage.clear(); location.reload(); }">
-      Delete All Data
-    </button>
-    <button class="btn btn-warning" onclick="document.getElementById('importFile').click()">
-      Import JSON Backup
-    </button>
-    <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
-    <p style="margin-top:20px; color:#666; font-size:14px;">
-      Your data is saved automatically in this browser.<br>
-      Use Export/Import to backup or transfer to another device.
-    </p>
-  </div>
+  <!-- Right: Content Panel -->
+  <main class="content">
+    <div class="toolbar">
+      <button class="btn" onclick="App.addTopic()">+ Topic</button>
+      <button class="btn warning" onclick="App.exportData()">Export JSON</button>
+      <label class="btn warning">
+        Import JSON <input type="file" id="importFile" onchange="App.importData(event)" accept=".json" />
+      </label>
+      <button class="btn danger" onclick="App.clearAll()">Clear All</button>
+    </div>
+
+    <div id="contentArea">
+      <div class="welcome">
+        <h1>Hindi Textbook Editor</h1>
+        <p>Select a lesson, topic, or question from the left tree to edit.</p>
+      </div>
+    </div>
+  </main>
 </div>
 
-<script>
-// =============== DEFAULT DATA (Paste your full JSON below) ===============
-const defaultData = {
-  "lesson8": {
-    "title": "सूरजकुंड मेला",
-    "topics": [
-      {
-        "topic": "लिखित",
-        "topic_type": "questions",
-        "sub_topics": [
-          { "q": "अंकन के पत्र का मुख्य उद्देश्य क्या था ?", "a": "अंकन के पत्र का मुख्य उद्देश्य हस्तशिल्प मेला का वर्ण करना। इन वस्तुओं से हम अपनी सभ्यता और संस्कृति की जानकारी प्राप्त होती है!" },
-          { "q": "उद्योग मेलों से हंमे क्या जानकारी मिलती है?", "a": "उद्योग मेलों दूरा हमे विभिन्न प्रदेशों की कला और संस्कृति की जानकारी प्राप्त होती है !" },
-          { "q": "उद्योग मेलों में क्या दर्शाया जाता है?", "a": "उद्योग मेल disparition में हात की बनी हुई चीजें, खिलौना, सुंदर मूर्तियाँ, ठप्पे और तांबे की बनी वस्तुयें और प्रदेश विशेष की कला दर्शाया जाती है!" },
-          { "q": "मेलों से क्या-क्या लाभ है ?", "a": "मेलो विविधता में एकता स्थापित करते हैं! ये प्रत्येक प्रदेश को कला संस्कृति केमाध्यम से एक दूसरे के पास लाते हैं और विभिन्न कलाओं कों लोकप्रियता दिलवाते हैं !" }
-        ]
-      },
-      {
-        "topic": "शब्द -अर्ध",
-        "topic_type": "meanings",
-        "sub_topics": [
-          { "q": "आमंत्रित", "a": "निमंत्रण देना" },
-          { "q": "आयोजन", "a": "प्रबंध" },
-          { "q": "वास्तुकला", "a": "भवन निर्माण की कला" },
-          { "q": "सभ्यता", "a": "समाज की उन्नति" },
-          { "q": "शिल्पियों", "a": "कारीगरों" },
-          { "q": "कार्य - कुशलता", "a": "कार्य को भली-भाति करना" },
-          { "q": "उजागर", "a": "प्रकट" },
-          { "q": "प्रांतों", "a": "प्रदेशों" },
-          { "q": "विविधता", "a": "अनेकता, कई तरह का" },
-          { "q": "प्रोस्ताहन", "a": "उत्साह बढ़ाना" },
-          { "q": "संस्कृति", "a": "संस्कारों से प्राप्त" },
-          { "q": "समारोह", "a": "उत्सव, मेला" }
-        ]
-      }
-      // ... (rest of lesson8 & lesson9 topics - I kept first two for brevity)
-    ]
-  },
-  "lesson9": {
-    "title": "सुमन एक उपवन के",
-    "topics": [
-      // ... your full lesson9 data
-    ]
-  }
-};
 
-// Load data
-let data = JSON.parse(localStorage.getItem('hindiLessonsData') || JSON.stringify(defaultData));
-if (!localStorage.getItem('hindiLessonsData')) {
-  localStorage.setItem('hindiLessonsData', JSON.stringify(defaultData));
-}
-
-let currentLessonKey = null;
-
-// =============== UI Functions ===============
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if (id === 'home') renderLessons();
-  if (id === 'manage') document.getElementById('totalCount').textContent = Object.keys(data).length;
-  document.querySelector(`button[onclick="showSection('${id}')"]`)?.classList.add('active');
-}
-
-function renderLessons() {
-  const grid = document.getElementById('lessonGrid');
-  grid.innerHTML = '';
-  Object.keys(data).sort().forEach(key => {
-    const lesson = data[key];
-    const card = document.createElement('div');
-    card.className = 'lesson-card';
-    card.innerHTML = `
-      <h3>${lesson.title}</h3>
-      <p><strong>${lesson.topics.length}</strong> topics • <strong>${lesson.topics.reduce((c,t)=>c+t.sub_topics.length,0)}</strong> items</p>
-      <button class="btn btn-primary" onclick="viewLesson('${key}')">View & Edit</button>
-      <button class="btn btn-danger btn-small" onclick="deleteLesson('${key}')">Delete</button>
-    `;
-    grid.appendChild(card);
-  });
-}
-
-function viewLesson(key) {
-  currentLessonKey = key;
-  const lesson = data[key];
-  document.getElementById('lessonTitle').textContent = lesson.title;
-  const content = document.getElementById('lessonContent');
-  content.innerHTML = '';
-
-  lesson.topics.forEach((topic, tIdx) => {
-    const div = document.createElement('div');
-    div.className = 'topic';
-    div.innerHTML = `<h3>${topic.topic} <small>(${topic.topic_type})</small></h3>
-      <button class="btn btn-small btn-danger" onclick="deleteTopic('${key}', ${tIdx})">Delete Topic</button>`;
-
-    topic.sub_topics.forEach((item, qIdx) => {
-      const qa = document.createElement('div');
-      qa.className = 'qa-pair';
-      if (topic.topic_type === "questions") {
-        qa.innerHTML = `<strong>Q:</strong> ${item.q}<br><strong style="color:green">A:</strong> ${item.a}
-          <button class="btn btn-small btn-danger" onclick="deleteQA('${key}', ${tIdx}, ${qIdx})">Delete</button>`;
-      } else {
-        qa.innerHTML = `<strong>${item.q}</strong> → ${item.a}
-          <button class="btn btn-small btn-danger" onclick="deleteQA('${key}', ${tIdx}, ${qIdx})">Delete</button>`;
-      }
-      div.appendChild(qa);
-    });
-
-    const addBtn = document.createElement('button');
-    addBtn.className = 'btn btn-success btn-small';
-    addBtn.textContent = '+ Add Item';
-    addBtn.onclick = () => addQA(key, tIdx);
-    div.appendChild(addBtn);
-    content.appendChild(div);
-  });
-
-  showSection('view-lesson');
-}
-
-// =============== CRUD ===============
-function createLesson() {
-  const key = document.getElementById('newKey').value.trim();
-  const title = document.getElementById('newTitle').value.trim();
-  if (!key || !title) return alert("Please fill both fields");
-  if (data[key]) return alert("This key already exists!");
-  data[key] = { title, topics: [] };
-  saveData();
-  document.getElementById('newKey').value = '';
-  document.getElementById('newTitle').value = '';
-  showSection('home');
-}
-
-function addNewTopic(key) {
-  const name = prompt("Enter topic name:");
-  const type = prompt("Enter type (questions / meanings / fillblanks):");
-  if (name && type) {
-    data[key].topics.push({ topic: name, topic_type: type, sub_topics: [] });
-    saveData();
-    viewLesson(key);
-  }
-}
-
-function addQA(key, tIdx) {
-  const q = prompt("Enter question/word:");
-  const a = prompt("Enter answer/meaning:");
-  if (q && a) {
-    data[key].topics[tIdx].sub_topics.push({ q, a });
-    saveData();
-    viewLesson(key);
-  }
-}
-
-function deleteLesson(key) { if(confirm("Delete entire lesson?")) { delete data[key]; saveData(); renderLessons(); } }
-function deleteTopic(key, idx) { if(confirm("Delete this topic?")) { data[key].topics.splice(idx,1); saveData(); viewLesson(key); } }
-function deleteQA(key, tIdx, qIdx) { if(confirm("Delete this item?")) { data[key].topics[tIdx].sub_topics.splice(qIdx,1); saveData(); viewLesson(key); } }
-
-function saveData() {
-  localStorage.setItem('hindiLessonsData', JSON.stringify(data));
-}
-
-function exportData() {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'hindi-textbook-backup.json'; a.click();
-}
-
-function importData(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      data = JSON.parse(ev.target.result);
-      saveData();
-      alert("Data imported successfully!");
-      renderLessons();
-    } catch { alert("Invalid JSON file"); }
-  };
-  reader.readAsText(file);
-}
-
-// Start
-renderLessons();
-document.getElementById('totalCount').textContent = Object.keys(data).length;
-</script>
+<script src="assets/js/admin.js"></script>
 </body>
 </html>
