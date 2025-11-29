@@ -1,6 +1,12 @@
 // app.js
 const App = (() => {
-  let data = JSON.parse(localStorage.getItem('hindiData') || JSON.stringify(DEFAULT_DATA));
+  const sampleUrl = new URL('assets/data/sample.json', window.location.origin + basePath).href;
+    
+    fetch(sampleUrl).then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+    }).then(data => {
+        console.log('fetched json:', data);
   if (!localStorage.getItem('hindiData')) localStorage.setItem('hindiData', JSON.stringify(DEFAULT_DATA));
 
   const save = () => localStorage.setItem('hindiData', JSON.stringify(data));
