@@ -1,0 +1,112 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 380px;
+  background: #2c3e50;
+  color: white;
+  overflow-y: auto;
+  border-right: 1px solid #1a252f;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: #1a252f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+}
+
+#tree {
+  padding: 10px 0;
+}
+
+.tree-node {
+  padding: 8px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+  position: relative;
+}
+
+.tree-node:hover { background: rgba(255,255,255,0.1); }
+.tree-node.selected { background: #3498db; font-weight: 600; }
+
+.tree-node.lesson { font-weight: 600; font-size: 15px; }
+.tree-node.topic { padding-left: 40px; font-size: 14px; color: #bdc3c7; }
+.tree-node.question { padding-left: 60px; font-size: 13px; color: #95a5a6; }
+
+.tree-node::before {
+  content: "▶";
+  position: absolute;
+  left: 8px;
+  font-size: 10px;
+  transition: 0.2s;
+}
+.tree-node.open::before { transform: rotate(90deg); }
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #fff;
+}
+
+.toolbar {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.welcome {
+  text-align: center;
+  margin-top: 100px;
+  color: #7f8c8d;
+}
+
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn.success { background: #27ae60; color: white; }
+.btn.warning { background: #f39c12; color: white; }
+.btn.danger { background: #e74c3c; color: white; }
+.btn.small { padding: 6px 12px; font-size: 13px; }
+
+input[type="file"] { display: none; }
+
+.editor {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.editor h3 { margin: 0 0 15px; color: #2c3e50; }
+.editor input, .editor textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+}
+.editor textarea { min-height: 120px; resize: vertical; }
