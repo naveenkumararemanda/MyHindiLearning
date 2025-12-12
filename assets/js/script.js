@@ -52,7 +52,7 @@ function readJSON(){
                 const lessonNum = parseInt(key.replace("composition", ""));
                 const lesson = data[key];
                 const lessonLink = document.createElement('a');
-                lessonLink.href = `lesson.html?lesson=${lessonNum}`;
+                lessonLink.href = `lesson.html?composition=${lessonNum}`;
                 lessonLink.className = 'lesson-card';
 
                 const lessonTitle = document.createElement('h3');
