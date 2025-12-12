@@ -74,8 +74,8 @@ function readJSON() {
             lessonT = 'Composition';
         }
 
-		if (!lesson) {
-            console.error('Lesson data not found for lesson number:', getQueryParam('lesson'));
+        if (!lesson) {
+            console.error('Lesson data not found for lesson number:');
             return;
         }
         lessontitle.innerText = lessonT + lessonNum + " : " + lesson.title || 'Lesson';
