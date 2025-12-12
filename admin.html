@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hindi Textbook - Tree View Editor</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="stylesheet" href="assets/css/admin.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -14,7 +17,7 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <h2>Lessons Tree</h2>
-      <button class="btn small success" onclick="App.addLesson()">+ Lesson</button>
+      <button class="btn small success" onclick="addLesson()">+ Lesson</button>
     </div>
     <div id="tree"></div>
   </aside>
@@ -22,12 +25,13 @@
   <!-- Right: Content Panel -->
   <main class="content">
     <div class="toolbar">
-      <button class="btn" onclick="App.addTopic()">+ Topic</button>
-      <button class="btn warning" onclick="App.exportData()">Export JSON</button>
+      <button class="btn" onclick="addTopic()">+ Topic</button>
+      <button class="btn" onclick="addQA()">+ Sub Topic</button>
+      <button class="btn warning" onclick="exportData()">Export JSON</button>
       <label class="btn warning">
-        Import JSON <input type="file" id="importFile" onchange="App.importData(event)" accept=".json" />
+        Import JSON <input type="file" id="importFile" onchange="importData(event)" accept=".json" />
       </label>
-      <button class="btn danger" onclick="App.clearAll()">Clear All</button>
+      <button class="btn danger" onclick="clearAll()">Clear All</button>
     </div>
 
     <div id="contentArea">
