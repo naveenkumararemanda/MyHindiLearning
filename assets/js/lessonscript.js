@@ -65,9 +65,9 @@ function readJSON() {
         return response.json();
     }).then(data => {
         // console.log('fetched json:', data);
-        const lessonNum = getQueryParam('lesson');
-        const lesson = data[`lesson${lessonNum}`];
-        const lessonT = 'Lesson';
+        let lessonNum = getQueryParam('lesson');
+        let lesson = data[`lesson${lessonNum}`];
+        let lessonT = 'Lesson';
         if (!lesson) {
             lessonNum = getQueryParam('composition');
             lesson = data[`composition${lessonNum}`];
