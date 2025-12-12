@@ -67,12 +67,18 @@ function readJSON() {
         // console.log('fetched json:', data);
         const lessonNum = getQueryParam('lesson');
         const lesson = data[`lesson${lessonNum}`];
+        const lessonT = 'Lesson';
         if (!lesson) {
+            lessonNum = getQueryParam('composition');
+            lesson = data[`composition${lessonNum}`];
+            lessonT = 'Composition';
+        }
+
+		if (!lesson) {
             console.error('Lesson data not found for lesson number:', getQueryParam('lesson'));
             return;
         }
-
-        lessontitle.innerText = 'Lesson ' + lessonNum + " : " + lesson.title || 'Lesson';
+        lessontitle.innerText = lessonT + lessonNum + " : " + lesson.title || 'Lesson';
 
         const tag_btn = document.createElement('button');
         tag_btn.textContent = "Listen";
