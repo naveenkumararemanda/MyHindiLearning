@@ -47,6 +47,19 @@ body {
 .tree-node.topic { padding-left: 40px; font-size: 14px; color: #bdc3c7; }
 .tree-node.question { padding-left: 60px; font-size: 13px; color: #95a5a6; }
 
+.children {
+  display: none;
+  overflow: hidden;
+}
+
+.tree-node.open > .children {
+  display: block;
+}
+
+.topic > .children {
+  padding-left: 20px;
+}
+
 .tree-node::before {
   content: "▶";
   position: absolute;
@@ -110,3 +123,4 @@ input[type="file"] { display: none; }
   font-family: inherit;
 }
 .editor textarea { min-height: 120px; resize: vertical; }
+
