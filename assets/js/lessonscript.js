@@ -78,7 +78,7 @@ function readJSON() {
             console.error('Lesson data not found for lesson number:');
             return;
         }
-        lessontitle.innerText = lesson;//lessonT + lessonNum + " : " + lesson.title || 'Lesson/Composition';
+        lessontitle.innerText = ' ' + lessonT + lessonNum + " : " + lesson.title || 'Lesson_Composition';
 
         const tag_btn = document.createElement('button');
         tag_btn.textContent = "Listen";
