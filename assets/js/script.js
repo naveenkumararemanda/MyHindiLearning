@@ -48,6 +48,23 @@ function readJSON(){
 
                 lessongrid.appendChild(lessonLink);
             }
+            else if(key.startsWith("composition")){
+                const lessonNum = parseInt(key.replace("composition", ""));
+                const lesson = data[key];
+                const lessonLink = document.createElement('a');
+                lessonLink.href = `lesson.html?lesson=${lessonNum}`;
+                lessonLink.className = 'lesson-card';
+
+                const lessonTitle = document.createElement('h3');
+                lessonTitle.textContent = `Composition ${lessonNum}`;
+                lessonLink.appendChild(lessonTitle);
+
+                const lessonDesc = document.createElement('p');
+                lessonDesc.textContent = lesson.title || '';
+                lessonLink.appendChild(lessonDesc);
+
+                lessongrid.appendChild(lessonLink);
+            }
         }
     }).catch(error => {
         console.error('Error fetching JSON:', error);
