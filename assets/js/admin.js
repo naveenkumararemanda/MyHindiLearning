@@ -187,3 +187,62 @@ function exportData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = 'hindi-data.json'; a.click();
 }
+
+// Function to show a custom popup with multiline input
+function showMultilineInputPopup() {
+   // Create the modal container
+   const modal = document.createElement('div');
+   modal.style.position = 'fixed';
+   modal.style.top = '0';
+   modal.style.left = '0';
+   modal.style.width = '100%';
+   modal.style.height = '100%';
+   modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+   modal.style.display = 'flex';
+   modal.style.justifyContent = 'center';
+   modal.style.alignItems = 'center';
+   modal.style.zIndex = '1000';
+   // Create the dialog box
+   const dialog = document.createElement('div');
+   dialog.style.backgroundColor = '#fff';
+   dialog.style.padding = '20px';
+   dialog.style.borderRadius = '8px';
+   dialog.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+   dialog.style.width = '400px';
+   // Add a title
+   const title = document.createElement('h3');
+   title.innerText = 'Enter Your Text:';
+   title.style.marginBottom = '10px';
+   dialog.appendChild(title);
+   // Add a textarea for multiline input
+   const textarea = document.createElement('textarea');
+   textarea.rows = 5;
+   textarea.cols = 40;
+   textarea.placeholder = 'Type your text here...';
+   textarea.style.width = '100%';
+   textarea.style.marginBottom = '10px';
+   dialog.appendChild(textarea);
+   // Add buttons
+   const buttonContainer = document.createElement('div');
+   buttonContainer.style.display = 'flex';
+   buttonContainer.style.justifyContent = 'space-between';
+   const okButton = document.createElement('button');
+   okButton.innerText = 'OK';
+   okButton.onclick = () => {
+      //  alert(`You entered:\n${textarea.value}`);
+       document.body.removeChild(modal);
+       return textarea.value;
+   };
+   const cancelButton = document.createElement('button');
+   cancelButton.innerText = 'Cancel';
+   cancelButton.onclick = () => {
+       document.body.removeChild(modal);
+   };
+   buttonContainer.appendChild(okButton);
+   buttonContainer.appendChild(cancelButton);
+   dialog.appendChild(buttonContainer);
+   // Append the dialog to the modal and the modal to the body
+   modal.appendChild(dialog);
+   document.body.appendChild(modal);
+}
+// Call the function to display the popup
