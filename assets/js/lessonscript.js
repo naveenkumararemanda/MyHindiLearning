@@ -160,9 +160,11 @@ function readJSON() {
                     const question = lesson.topics[key].sub_topics[fb];
                     const tag_li = document.createElement('li');
                     const tag_h4 = document.createElement('h4');
+                    const tag_p = document.createElement('p');
 
                     const qBtn = makeListenBtn(question.q + ' , , ' || '');
-                    tag_h4.innerHTML = '' + question.q;// + tag_btn.outerHTML;
+                    tag_p.innerHTML = '' + question.q;// + tag_btn.outerHTML;
+                    tag_h4.appendChild(tag_p);
                     tag_h4.appendChild(qBtn);
                     tag_li.appendChild(tag_h4);
                     tag_ol.appendChild(tag_li);
