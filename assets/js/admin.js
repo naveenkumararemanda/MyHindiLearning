@@ -114,7 +114,7 @@ function renderTree(data) {
 }
 
 function addLesson() {
-  const key = prompt("Key (e.g. lesson10):");
+  const key = prompt("Key (e.g. lesson1 / composition1 / letterwriting1):");
   const title = prompt("Title:");
   if (key && title) { dataJ[key] = { title, topics: [] }; renderTree(dataJ); }
   console.log('fetched json:', dataJ);
