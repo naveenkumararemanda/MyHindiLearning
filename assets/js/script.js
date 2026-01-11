@@ -18,7 +18,7 @@ function loadVoices() {
     }
   }
   if (availableVoices) {
-    const voicesDropDown = document.getElementById("voice-selection");
+    const voicesDropDown = document.getElementById("voice-list");
     let i = 0;
     for (const voice in availableVoices){
         const voiceLink = document.createElement("a");
@@ -32,6 +32,51 @@ function loadVoices() {
     }
   }
 }
+let voices = [];
+const voiceList = document.getElementById('voice-list');
+const textToSpeak = document.getElementById('text-to-speak');
+
+// Function to populate the list of voices as radio buttons
+function populateVoiceList() {
+    voices = window.speechSynthesis.getVoices();
+    voiceList.innerHTML = ''; // Clear the "Loading voices..." message
+
+    if (voices.length === 0) {
+        voiceList.innerHTML = '<p>No voices available. Check browser support or connection.</p>';
+        return;
+    }
+
+    voices.forEach((voice, index) => {
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.id = `voice${index}`;
+        input.name = 'voiceSelection'; // Same name groups them as a single selection
+        input.value = index; // Store the index to easily retrieve the voice object later
+        
+        // Select the first voice by default
+        if (index === 0) {
+            input.checked = true;
+        }
+
+        const label = document.createElement('label');
+        label.htmlFor = `voice${index}`;
+        label.textContent = `${voice.name} (${voice.lang}) ${voice.default ? '— DEFAULT' : ''}`;
+        
+        const br = document.createElement('br');
+
+        voiceList.appendChild(input);
+        voiceList.appendChild(label);
+        voiceList.appendChild(br);
+    });
+}
+
+// Voices might not load immediately, so listen for the 'voiceschanged' event
+// window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
+// Call initially, in case voices are already loaded (e.g., in Firefox)
+populateVoiceList();
+
+
 
 function readJSON() {
   const lessongrid = document.getElementById("lessongrid");
