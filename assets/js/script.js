@@ -8,6 +8,11 @@
 // loadVoices();
 readJSON();
 
+window.speechSynthesis.onvoiceschanged = populateVoiceList;
+
+// Call initially, in case voices are already loaded (e.g., in Firefox)
+populateVoiceList();
+
 function loadVoices() {
   const availableVoices = [];
   const voices = speechSynthesis.getVoices();
@@ -34,7 +39,6 @@ function loadVoices() {
 }
 let voices = [];
 const voiceList = document.getElementById('voice-list');
-const textToSpeak = document.getElementById('text-to-speak');
 
 // Function to populate the list of voices as radio buttons
 function populateVoiceList() {
@@ -71,10 +75,7 @@ function populateVoiceList() {
 }
 
 // Voices might not load immediately, so listen for the 'voiceschanged' event
-// window.speechSynthesis.onvoiceschanged = populateVoiceList;
 
-// Call initially, in case voices are already loaded (e.g., in Firefox)
-populateVoiceList();
 
 
 
